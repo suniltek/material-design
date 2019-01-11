@@ -1,0 +1,20 @@
+.pd-title{color:#056AD1;font-size:22px;text-transform:uppercase;}
+.pd-star-fill{color:#FEAF16;font-size: 20px;}
+.pd-star-outline{color:#999999;font-size:20px;}
+.pd-info{display: flex;}
+.pd-info div{margin-right:25px;}
+.pd-tab-header{padding-bottom:0;background:#76D3D8;}
+.pd-tab-info{display:flex;padding:5px 0;border-bottom:1px solid #fff;margin:0 0 15px;}
+.pd-tab-info div{margin-right: 35px;}
+.pd-bg{background: url(../images/company-details-bg.jpg) no-repeat center center; -webkit-background-size: cover;-moz-background-size: cover;
+-o-background-size: cover;background-size: cover;background-position:100% 100%;}
+.pd-tab-info div h3{font-size:18px;color:#000;}
+.pd-tab-info div h3 span{font-size:16px;font-weight:400;}
+.nav-tabs .pd-nav-links{border-top-left-radius:8px;border-top-right-radius:8px;}
+.pd-nav-links{padding:0.5rem 2rem;}
+.pd-nav-links span{font-size:18px;}
+.pd-tabcontent-title{color:#0A6AD3;font-size:17px;}
+.pd-tabcontent-desc{font-size:15px;}
+.border-all{border:1px solid #dad9d9;padding:15px;font-size:16px;}
+.comd-header{background:#666972;}
+.comd-heading{font-size:22px;text-transform: uppercase;color:#fff;margin-bottom:0;}
