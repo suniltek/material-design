@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Process</title>
+
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,300i,400,400i,600,600i,700,700i%7CComfortaa:300,400,700" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <style>
+        ul {list-style: none;padding:0}
+
+        /* FORM */
+        input.accordianInput {position: absolute;top: -9999px;left: -9999px;} 
+
+        label.accordianHeading {display: block;float: left;height: 97vh;width: 25px;overflow: hidden;background: #30354a;text-align: center;font-size: 14px;
+        line-height: 50px;transition: background 300ms ease;background-image: linear-gradient(#30354a 20%, #fafafa 20%);}
+
+        li.accordianList:nth-child(odd) > input.accordianInput + label.accordianHeading {background:#515e94;background-image: linear-gradient(#515e94 20%, #fafafa 20%);}
+
+        label.accordianHeading:hover,
+        li.accordianList > input.accordianInput + label.accordianHeading:hover {
+        background: #2196f3;color: #fff;cursor: pointer;background-image: linear-gradient(#2196f3 20%, #fafafa 20%);
+        }
+
+        input.accordianInput[type="radio"]:checked ~ label.accordianHeading {
+        background: #2196f3;color: #fff;cursor: default !important;background-image: linear-gradient(#2196f3 20%, #fafafa 20%) !important;
+        }
+
+        /* SLIDES */
+        .accslide {display: block;height: 100%;width: 0px;padding-top:0px;padding-bottom:10px;float: left;overflow-x: hidden;font-size: 12px;line-height: 1.5;transition: all 700ms ease;}
+        .accslide * {padding-left:5px;padding-right:5px;}
+        .accslide img {margin-top: 10px;}
+        .accslide .ptitle{font-size:22px;font-weight:700;padding-left: 0;}
+        .accslide .content{width:100%;overflow: auto;}
+
+        input.accordianInput[type="radio"]:not(:checked) ~ label.accordianHeading > * {
+        padding-left: 7px;font-size: 1.2em;color:#fff;white-space: nowrap;
+        -webkit-transform: rotate(90deg);transform: rotate(90deg);}
+
+        input.accordianInput[type="radio"]:checked ~ label.accordianHeading > * {display: none;}
+
+        li.accordianList:nth-child(1):nth-last-child(2) input[type="radio"]:checked ~ .accslide {
+        width: calc(100% - 80px);
+        }
+        li.accordianList:nth-child(1):nth-last-child(3) input[type="radio"]:checked ~ .accslide {
+        width: calc(100% - 120px);
+        }
+        li.accordianList:nth-child(1):nth-last-child(4) input[type="radio"]:checked ~ .accslide {
+        width: calc(100% - 160px);
+        }
+        li.accordianList:nth-child(1):nth-last-child(5) input[type="radio"]:checked ~ .accslide {
+        width: calc(100% - 200px);
+        }
+        li.accordianList:nth-child(1):nth-last-child(6) input[type="radio"]:checked ~ .accslide {
+        width: calc(100% - 240px);
+        }
+        li.accordianList:nth-child(1):nth-last-child(7) input[type="radio"]:checked ~ .accslide {
+        width: calc(100% - 280px);
+        }
+        li.accordianList:nth-child(1):nth-last-child(8) input[type="radio"]:checked ~ .accslide {
+        width: calc(100% - 320px);
+        }
+
+
+        li.accordianList:nth-child(2):nth-last-child(1) input[type="radio"]:checked ~ .accslide {
+        width: calc(100% - 80px);
+        }
+        li.accordianList:nth-child(2):nth-last-child(2) input[type="radio"]:checked ~ .accslide {
+        width: calc(100% - 120px);
+        }
+        li.accordianList:nth-child(2):nth-last-child(3) input[type="radio"]:checked ~ .accslide {
+        width: calc(100% - 160px);
+        }
+        li.accordianList:nth-child(2):nth-last-child(4) input[type="radio"]:checked ~ .accslide {
+        width: calc(58% - 200px);
+        }
+        li.accordianList:nth-child(2):nth-last-child(5) input[type="radio"]:checked ~ .accslide {
+        width: calc(59% - 240px);
+        }
+        li.accordianList:nth-child(2):nth-last-child(6) input[type="radio"]:checked ~ .accslide {
+        width: calc(100% - 280px);
+        }
+        li.accordianList:nth-child(2):nth-last-child(7) input[type="radio"]:checked ~ .accslide {
+        width: calc(100% - 320px);
+        }
+
+
+        li.accordianList:nth-child(3):nth-last-child(1) input[type="radio"]:checked ~ .accslide {
+        width: calc(100% - 120px);
+        }
+        li.accordianList:nth-child(3):nth-last-child(2) input[type="radio"]:checked ~ .accslide {
+        width: calc(100% - 160px);
+        }
+        li.accordianList:nth-child(3):nth-last-child(3) input[type="radio"]:checked ~ .accslide {
+        width: calc(58% - 200px);
+        }
+        li.accordianList:nth-child(3):nth-last-child(4) input[type="radio"]:checked ~ .accslide {
+        width: calc(59% - 240px);
+        }
+        li.accordianList:nth-child(3):nth-last-child(5) input[type="radio"]:checked ~ .accslide {
+        width: calc(100% - 280px);
+        }
+        li.accordianList:nth-child(3):nth-last-child(6) input[type="radio"]:checked ~ .accslide {
+        width: calc(100% - 320px);
+        }
+
+
+        li.accordianList:nth-child(4):nth-last-child(1) input[type="radio"]:checked ~ .accslide {
+        width: calc(100% - 160px);
+        }
+        li.accordianList:nth-child(4):nth-last-child(2) input[type="radio"]:checked ~ .accslide {
+        width: calc(58% - 200px);
+        }
+        li.accordianList:nth-child(4):nth-last-child(3) input[type="radio"]:checked ~ .accslide {
+        width: calc(59% - 240px);
+        }
+        li.accordianList:nth-child(4):nth-last-child(4) input[type="radio"]:checked ~ .accslide {
+        width: calc(100% - 280px);
+        }
+        li.accordianList:nth-child(4):nth-last-child(5) input[type="radio"]:checked ~ .accslide {
+        width: calc(100% - 320px);
+        }
+
+
+        li.accordianList:nth-child(5):nth-last-child(1) input[type="radio"]:checked ~ .accslide {
+        width: calc(25% - 200px);
+        }
+        li.accordianList:nth-child(5):nth-last-child(2) input[type="radio"]:checked ~ .accslide {
+        width: calc(59% - 240px);
+        }
+        li.accordianList:nth-child(5):nth-last-child(3) input[type="radio"]:checked ~ .accslide {
+        width: calc(100% - 280px);
+        }
+        li.accordianList:nth-child(5):nth-last-child(4) input[type="radio"]:checked ~ .accslide {
+        width: calc(100% - 320px);
+        }
+
+
+        li.accordianList:nth-child(6):nth-last-child(1) input[type="radio"]:checked ~ .accslide {
+        width: calc(25% - 200px);
+        }
+        li.accordianList:nth-child(6):nth-last-child(2) input[type="radio"]:checked ~ .accslide {
+        width: calc(100% - 220px);
+        }
+        li.accordianList:nth-child(6):nth-last-child(3) input[type="radio"]:checked ~ .accslide {
+        width: calc(100% - 240px);
+        }
+        li.accordianList:nth-child(6):nth-last-child(4) input[type="radio"]:checked ~ .accslide {
+        width: calc(100% - 280px);
+        }
+        li.accordianList:nth-child(6):nth-last-child(5) input[type="radio"]:checked ~ .accslide {
+        width: calc(100% - 320px);
+        }
+
+        li.accordianList:nth-child(7):nth-last-child(1) input[type="radio"]:checked ~ .accslide {
+        width: calc(100% - 280px);
+        }
+        li.accordianList:nth-child(7):nth-last-child(2) input[type="radio"]:checked ~ .accslide {
+        width: calc(100% - 320px);
+        }
+
+        li.accordianList:nth-child(8):nth-last-child(1) input[type="radio"]:checked ~ .accslide {
+        width: calc(100% - 320px);
+        } 
+        
+        .content table thead th{background-color:#2583c2;color: #fff;vertical-align:middle;}
+        .content table tbody td{vertical-align:middle;}
+    </style>
+</head>
+
+<body style="background:#fafafa">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <ul>
+                    <li>
+                        <input type="radio" name="rad" class="accordianInput">
+                        <label class="accordianHeading">
+                            <div>Process</div>
+                        </label>
+                        <div class="accslide" style="width:45%;">
+                            <div class="content">
+                                <div class="process-wrapper">
+                                    <h4 class="ptitle">Process Data</h4>
+                                    <table class="table table-bordered table-sm table-striped processTable" id="processTable-Tbl">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">Level</th>
+                                                <th class="text-center">Part Number</th>
+                                                <th>Process Description</th>
+                                                <th class="text-center">Process Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="processTbl">
+                                            <tr>
+                                                <td class="text-center">0</td>
+                                                <td class="text-center">542473700114</td>
+                                                <td>REAR DOOR TRIM ASSY;RH</td>
+                                                <td class="text-center"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">1</td>
+                                                <td class="text-center">542473700102</td>
+                                                <td>ASSY REAR DOOR TRIM RH (XZ/XT/XM)</td>
+                                                <td class="text-center">
+                                                    <button id="ProcList-btn" class="btn btn-success btn-sm p-0" style="font-size:.700rem;" onclick="addProcesses();"><i class="fa fa-plus"></i></button>
+                                                    <button id="ProcDel-btn" class="btn btn-danger btn-sm p-0" style="font-size:.700rem;" onclick="deleteProcesses();"><i class="fa fa-minus"></i></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="accordianList">
+                        <input id="rad2" type="radio" class="accordianInput" name="rad" checked="checked">
+                        <label for="rad2" class="accordianHeading">
+                            <div>Machinery</div>
+                        </label>
+                        <div class="accslide">
+                            <div class="content">
+                                <div class="machinery-wrapper">
+                                    <h4 class="ptitle">Machinery Cost</h4>
+                                    <table class="table table-bordered table-striped table-sm" id="machineryTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Machine Type</th>
+                                                <th>Parts Per Cycle</th>
+                                                <th>Cycle Time (sec)</th>
+                                                <th>MMR</th>
+                                                <th>MHR</th>
+                                                <th>Machinery Cost</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="mcTable">
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- <li class="accordianList">
+                        <input id="rad3" type="radio" class="accordianInput" name="rad">
+                        <label for="rad3" class="accordianHeading">
+                            <div>Tooling</div>
+                        </label>
+                        <div class="accslide">
+                            <div class="content">
+                                <div class="tooling-wrapper">
+                                    <h4 class="ptitle">Tooling Cost</h4>
+                                    <table class="table table-bordered table-striped toolingTable table-sm" id="toolingCostTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Tool Cost</th>
+                                                <th>Tool Lifecycle</th>
+                                                <th>Tool Cost Per Part</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="toolingCost-Table">
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </li> -->
+                    <li class="accordianList">
+                        <input id="rad4" type="radio" class="accordianInput" name="rad">
+                        <label for="rad4" class="accordianHeading">
+                            <div>Labour</div>
+                        </label>
+                        <div class="accslide">
+                            <div class="content">
+                                <div class="labour-wrapper">
+                                    <h4 class="ptitle">Labour Cost</h4>
+                                    <table class="table table-bordered table-striped labourTable table-sm" id="labourCostTable">
+                                        <thead>
+                                            <tr>
+                                                <th>FTE</th>
+                                                <th>Labour Type</th>
+                                                <th>Labour Rate Per HR</th>
+                                                <th>OLE</th>
+                                                <th>Labour Cost</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="labourCost-Table">
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="accordianList">
+                        <input id="rad5" type="radio" class="accordianInput" name="rad">
+                        <label for="rad5" class="accordianHeading">
+                            <div>Batch Setup</div>
+                        </label>
+                        <div class="accslide">
+                            <div class="content">
+                                <div class="batch-setup-wrapper">
+                                    <h4 class="ptitle">Batch Setup Cost</h4>
+                                    <table class="table table-bordered table-striped batchTable table-sm" id="batchSetupCostTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Setup Time (sec)</th>
+                                                <th>FTE</th>
+                                                <th>Skill Type</th>
+                                                <th>Labour Rate Per HR</th>
+                                                <th>Batch Setup Cost</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="batchSetupCost-Table">
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="accordianList">
+                        <input id="rad6" type="radio" class="accordianInput" name="rad">
+                        <label for="rad6" class="accordianHeading">
+                            <div>Total Value Add</div>
+                        </label>
+                        <div class="accslide">
+                            <div class="content">
+                                <div class="total-value-wrapper">
+                                    <h4 class="ptitle">Total Value Add</h4>
+                                    <table class="table table-bordered table-striped totalTable table-sm" id="totalValueAddTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Total Value Add</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="totalValueAdd-Table">
+        
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+        
+                <!-- Alert boxes divs -->
+                <div id="Error_Popup_div" style="box-shadow: 2px 3px 10px #000000;position:absolute;width:400px;height:100px;top:50%;left:50%;margin-left:-189px;margin-top:-50px;border-top-right-radius:0px;border-top-left-radius:0px;border-bottom-left-radius:15px;border-bottom-right-radius:15px;box-shadow: 2px 3px 10px #336699;background: none repeat scroll 0 0 transparent;background-color:#FFFFFF;;display:none;"></div>
+                <div id="Confirmation_Popup_div" style="box-shadow: 2px 3px 10px #000000;position:absolute;width:400px;height:100px;top:50%;left:50%;margin-left:-189px;margin-top:-50px;border-top-right-radius:0px;border-top-left-radius:0px;border-bottom-left-radius:15px;border-bottom-right-radius:15px;box-shadow: 2px 3px 10px #336699;background: none repeat scroll 0 0 transparent;background-color:#FFFFFF;;display:none;"></div>
+        
+                <!-- Add Process Modal -->
+                <div class="modal fade" id="addProcessModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header" style="background:#daffda;padding:10px 15px;">
+                                <h5 class="modal-title">Add Process</h5>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body">		
+                                <div id="ProcessDiv" style=" width:100%; align:center;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <!-- jQuery CDN - Slim version (=without AJAX) -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+     <!-- Popper.JS -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+     <!-- Bootstrap JS -->
+     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+     <script type="text/javascript">
+
+        var lSrNoToBeDeleted = [];
+    
+        /*** FUNCTION FOR DISPLAYING Process/Operations TEMPLATE ***/
+        function addProcesses()
+        {
+            $("#addProcessModal").modal("hide");
+            var arrayRes = GetOperations();
+            //console.log(arrayRes);
+            $("#addProcessModal").modal("show");
+            
+            var lProcsdiv=document.getElementById("ProcessDiv");
+            lProcsdiv.innerHTML ='';
+            //lProcsdiv.setAttribute('style','overflow:auto; height:400px;');
+        
+            //Table Creation
+            var lTbl1 = document.createElement('TABLE');
+            lTbl1.setAttribute('id','TemplateTable');
+            lTbl1.setAttribute('class','table table-bordered table-sm table-striped');	
+            lProcsdiv.appendChild(lTbl1);
+            
+            var lRow,lCol,lRowno=0;	
+                
+            lRow = lTbl1.insertRow(lRowno);
+            lCol = lRow.insertCell(0);
+            lCol.innerHTML = "Add";	
+            lCol.setAttribute('style', 'text-align:center;');
+            lCol.style.background = "#2583c2";
+            lCol.style.color = "#fff";
+            lCol = lRow.insertCell(1);
+            lCol.innerHTML = 'Process Name';
+            lCol.style.background = "#2583c2";
+            lCol.style.color = "#fff";
+            
+            for(var lI=0; lI < arrayRes.length-1; lI++)
+            {
+                lRowno++;	
+
+                lRow = lTbl1.insertRow(lRowno);
+                    
+                lCol = lRow.insertCell(0);
+                var chk_box=document.createElement("input");
+                chk_box.setAttribute('id','chk1_'+lRowno);
+                chk_box.setAttribute('type', 'checkbox');
+                lCol.setAttribute('style', 'text-align:center;');
+                lCol.appendChild(chk_box);
+                
+                lCol = lRow.insertCell(1);
+                if(arrayRes[lI].indexOf("&") > 0)
+                {
+                    arrayRes[lI] = arrayRes[lI].replace(/&/,"%26");
+                }
+                lCol.innerHTML = arrayRes[lI];
+                //lCol.setAttribute('style', 'text-align:center;');
+            }	
+            
+            var ladd_div = document.createElement("div");
+            ladd_div.setAttribute('class','text-center');
+            var lBtn_add = document.createElement("a");
+            var lTnode1 = document.createTextNode("Add Processes");
+            lBtn_add.setAttribute('id','add_template_process');
+            lBtn_add.setAttribute('style','margin-right:10px;');
+            lBtn_add.setAttribute('href','#');
+            lBtn_add.setAttribute('class','btn btn-success btn-sm');
+            lBtn_add.setAttribute('title','Add Process to List');
+            lBtn_add.appendChild(lTnode1);
+            lBtn_add.onclick = function() {submit_template()};
+            ladd_div.appendChild(lBtn_add);	
+            
+            var lBtn_cancel=document.createElement("a");
+            var lTnode2=document.createTextNode("Cancel");
+            lBtn_cancel.setAttribute('href','#');
+            lBtn_cancel.setAttribute('class','btn btn-danger btn-sm');
+            lBtn_cancel.appendChild(lTnode2);
+            ladd_div.appendChild(lBtn_cancel);
+            lProcsdiv.appendChild(ladd_div);
+            lBtn_cancel.onclick = function() 
+            {
+                $("#addProcessModal").modal("hide");
+            };
+            return false;
+        }
+        
+        function GetOperations()
+        {
+            var OperationsList = ["Heat stacking","Inspection","Injection Molding", "Deflashing & Machine Inspection", "TRIM CLIP (ITW)", "Material Movement from In-dock"];
+
+            return OperationsList;
+        }
+
+        function submit_template()
+        {
+            var lTbl1=document.getElementById("processTbl");  
+            var lRow_len = lTbl1.rows.length; 
+            var lRowno = lRow_len-1;
+            lRowno ++;        
+            var lRow,lCol,lOpt,lText,lChkflag=0;
+            
+            // var lRowno = 0;
+            
+            var lTemplatetable=document.getElementById("TemplateTable");
+            var lTempRowCount=lTemplatetable.rows.length;
+
+            //create tr
+            // var newTblRow = document.createElement("tr"); // row
+            // newTblRow.setAttribute('id','mainTableRow');
+            // newTblRow.setAttribute('style','width:100%');
+            // lTbl1.appendChild(newTblRow);
+
+            //create td
+            // var newTblTD = document.createElement("td"); // TD
+            // newTblTD.setAttribute('id','mainTableTD');
+            // newTblTD.setAttribute('colspan',"4");
+            // newTblRow.appendChild(newTblTD);
+
+            //create table with id
+            // var ltableTbl = document.createElement("table"); // Table
+            // ltableTbl.setAttribute('id','tableTable'+lRowno);
+            // ltableTbl.setAttribute('class','table table-borderless mb-0');	
+            // ltableTbl.setAttribute('style','width:100%');    
+            // ltableTbl.setAttribute('style','table-layout: fixed;');
+            // //lRow = ltableTbl.insertRow(lRowno); 
+
+            // //create thead with id
+            // var ltableHead = document.createElement("thead"); // thead
+            // ltableTbl.appendChild(ltableHead);
+
+            // //create tr
+            // var ltableHeadtr = document.createElement("tr"); // tr
+            // ltableHead.appendChild(ltableHeadtr);
+
+            // //create th
+            // var ltableHeadth1 = document.createElement("th"); // th
+            // var thDel = document.createTextNode("Delete");
+            // ltableHeadth1.appendChild(thDel);
+            // var ltableHeadth2 = document.createElement("th"); // th
+            // var thSrNo = document.createTextNode("Sr.No");
+            // ltableHeadth2.appendChild(thSrNo);
+            // var ltableHeadth3 = document.createElement("th"); // th
+            // var thProcessName = document.createTextNode("Process Name");
+            // ltableHeadth3.appendChild(thProcessName);
+
+
+            // ltableHeadtr.appendChild(ltableHeadth1);
+            // ltableHeadtr.appendChild(ltableHeadth2);
+            // ltableHeadtr.appendChild(ltableHeadth3);
+
+            // newTblTD.appendChild(ltableTbl); //New Create Table append to TD
+            // var iflag = 0;
+            // var checkboxCount = document.querySelectorAll('input[type="checkbox"]:checked').length;
+
+            /*************** Add Multiple rows to table *********************/
+
+            /* ####### Method 1 ######## */
+            /*var str ="";
+            for(var i=1;i<lTempRowCount;i++)
+            {
+                var checkedRows=lTemplatetable.rows[i];
+                var checkedItems = checkedRows.cells[0].childNodes[0];
+
+                if((checkedItems != null) && (checkedItems.checked == true))
+                {
+                    str+="<tr>";
+                    var cellCount = document.getElementById('machineryTable').rows[0].cells.length;
+                    for(var j=0; j<cellCount; j++)
+                    {
+                        str+="<td>&nbsp;</td>";   
+                    }
+                    str+="</tr>";
+                }
+            }
+            $('#machineryTable tbody').html(str);*/
+
+            for(var lI=1; lI< lTempRowCount; lI++)
+            { 
+                var lRow1=lTemplatetable.rows[lI];
+                var lChkbox=lRow1.cells[0].childNodes[0];
+                var lTempProcs = lRow1.cells[1].innerHTML;
+                
+                //lRowno++;
+
+                if((lChkbox != null) && (lChkbox.checked == true))
+                {   
+                    //GetMachines_MHR(lI);
+                    //insert row
+                    lRow = lTbl1.insertRow(lRowno);
+                    lRow.className='tblRow';
+                    
+                    // sr_no 	
+                    lCol = lRow.insertCell(0);
+                    lCol.setAttribute("style","width:3%");
+                    var lSrNo=document.createElement("input");
+                    lSrNo.setAttribute("id","process_lSrNo_"+lRowno);
+                    lSrNo.setAttribute("name","lSrNo"+lRowno);
+                    lSrNo.setAttribute("type","hidden");
+                    lSrNo.setAttribute("value",lRowno);
+                    lCol.setAttribute('class', 'text-center');
+                    lCol.appendChild(lSrNo);
+
+                    // Add Part Number
+                    lCol = lRow.insertCell(1);
+                    lCol.setAttribute("style","width:15%");
+                    lCol.setAttribute("class","text-center");
+                    var partNoText = document.createElement("span");
+                    partNoText.setAttribute("id",'partNo_'+lRowno);
+                    lCol.appendChild(partNoText);
+                    
+                    // if(checkboxCount > 0 && iflag == 0){
+                        partNoText.innerHTML = "542473700102";
+                    //     iflag=1;
+                    // }
+                    // else if(iflag == 1){
+                    //     partNoText.innerHTML = "";
+                    // }
+                    
+
+                    lCol = lRow.insertCell(2);
+                    lCol.setAttribute("style","width:10%");
+                    var lChk_box=document.createElement("input");
+                    lChk_box.setAttribute('id','process_chk_'+lRowno);
+                    lChk_box.setAttribute("type", "checkbox");
+                    lCol.appendChild(lChk_box);
+                    lCol.setAttribute("style","width:50%;margin-right:5px");
+                    var processtext = document.createElement("span");
+                    processtext.setAttribute('id','process_'+lRowno);
+                    processtext.innerHTML = lTempProcs;
+                    processtext.disabled = true;
+                    lCol.appendChild(processtext);	
+
+                    lCol = lRow.insertCell(3);
+                    
+        
+                    lRowno++;
+                }
+                // lRowno++;
+            }
+
+            $("#addProcessModal").modal("hide");
+
+            var tableRowsCount = document.getElementById("processTable-Tbl");
+            var rowCountOff = tableRowsCount.rows.length;
+            addRowsToAllTable(rowCountOff);
+        }
+
+        /* ####### Method 2 ######## */
+        function addRowsToAllTable(rowCountOff){
+            var mcstr ="";
+            var toolingstr = "";
+            var labourstr = "";
+            var batchstr = "";
+            var totalValuestr = "";
+
+            for(var i=0;i<rowCountOff-1;i++)
+            {
+                /********* Machinery Table ************/
+                mcstr+="<tr id=mcRowId-"+i+">";
+                var cellCountMc = document.getElementById('machineryTable').rows[0].cells.length;
+                for(var j=0; j<cellCountMc; j++)
+                {
+                    mcstr+="<td contenteditable='true'></td>";   
+                }
+                mcstr+="</tr>";
+
+                /********* Tooling Cost Table ************/
+                /*toolingstr+="<tr>";
+                var cellCountTooling = document.getElementById('toolingCostTable').rows[0].cells.length;
+                for(var j=0; j<cellCountTooling; j++)
+                {
+                    toolingstr+="<td>&nbsp;</td>";   
+                }
+                toolingstr+="</tr>";*/
+
+                /********* Labour Cost Table ************/
+                labourstr+="<tr>";
+                var cellCountLabour = document.getElementById('labourCostTable').rows[0].cells.length;
+                for(var j=0; j<cellCountLabour; j++)
+                {
+                    labourstr+="<td>&nbsp;</td>";   
+                }
+                labourstr+="</tr>";
+
+                /********* Batch Setup Table ************/
+                batchstr+="<tr>";
+                var cellCountBatch = document.getElementById('batchSetupCostTable').rows[0].cells.length;
+                for(var j=0; j<cellCountBatch; j++)
+                {
+                    batchstr+="<td>&nbsp;</td>";   
+                }
+                batchstr+="</tr>";
+
+                /********* Total Value Add Table ************/
+                totalValuestr+="<tr>";
+                var cellCountTotalValue = document.getElementById('totalValueAddTable').rows[0].cells.length;
+                for(var j=0; j<cellCountTotalValue; j++)
+                {
+                    totalValuestr+="<td>&nbsp;</td>";   
+                }
+                totalValuestr+="</tr>";
+            }
+
+            $('#machineryTable tbody').html(mcstr);
+            // $('#toolingCostTable tbody').html(toolingstr);
+            $('#labourCostTable tbody').html(labourstr);
+            $('#batchSetupCostTable tbody').html(batchstr);
+            $('#totalValueAddTable tbody').html(totalValuestr); 
+        }
+
+        /*** FUNCTION TO DELETE PROCESS ROW ***/
+        function deleteProcesses()
+        {	
+            var lSrNoArr = [];
+            var lSrNo;
+            var lChkCount=0;
+
+            var delMachineryRow = document.getElementById("mcTable");
+
+            //to set all the other element active
+            //document.getElementById("forging-inhouse-div").style.opacity = "1.0";
+            //document.getElementById("forging-inhouse-div").style.pointerEvents = "visible";
+            document.getElementById("Confirmation_Popup_div").style.display = 'none';
+            
+            var lTbl1=document.getElementById("processTbl");
+            var lRowCount=lTbl1.rows.length;
+            // console.log("Row Count ==>", lRowCount);
+            for(var lJ=2; lJ<lRowCount; lJ++)
+            {
+                // console.log("lJ=>> ",lJ);
+                var lChk_box = document.getElementById('process_chk_'+lJ); 
+                // console.log(lChk_box);
+                if(lChk_box.checked == true){
+                    lChkCount++;
+                }
+            }
+            // console.log("Check Count ==>", lChkCount) //-1;
+            
+            if(lChkCount == lRowCount-2){
+                error_div();
+                document.getElementById("error_value").innerHTML="Cannot delete all the rows.";	
+                document.getElementById('Error_Popup_div').style.display="block";	
+                return false;
+            }
+
+            for(var lI=0,j=0; lI< lRowCount; lI++,j++)
+            {	
+                var lRow=lTbl1.rows[lI];
+                var lChkbox=lRow.cells[2].childNodes[0];
+                //console.log(lChkbox);
+                if(null!=lChkbox && true==lChkbox.checked)
+                {			
+                    var lToBeDeleted = document.getElementById("process_lSrNo_"+j).value;			//get Sr no of the Row to be deleted from database
+                    // console.log("Row deleted ==>", lToBeDeleted);
+                    lSrNoToBeDeleted.push(lToBeDeleted);                      
+                    lTbl1.deleteRow(lI);
+
+                    delMachineryRow.deleteRow(lI);
+
+                    lRowCount--;
+                    lI--;
+                }
+            }
+            
+            //deleteData();
+            
+            for (var i = 2, row; row = lTbl1.rows[i]; i++) 
+            {
+                for (var j = 2, col; col = row.cells[j]; j++)
+                {
+                    var lRowno = i;
+                    // console.log(lRowno);
+                    //change id of column with proper row no.
+                    row.cells[0].lastChild.id = "process_lSrNo_"+lRowno;
+                    lSrNo = document.getElementById("process_lSrNo_"+lRowno).value;  //get Sr no value 
+                    
+                    lSrNoArr.push(lSrNo);
+                    lSrNoArr = lSrNoArr.unique();
+                    var lCnt = i;				
+                    if (j == 1)
+                    {
+                        //col.innerHTML= +i;
+                        // var lSrNo=document.createElement("input");
+                        //lSrNo.innerHTML= lSrNoArr[lCnt];
+                        // lSrNo.setAttribute("id","process_lSrNo_"+lRowno);
+                        // lSrNo.setAttribute("name","lSrNo"+lRowno);
+                        // lSrNo.setAttribute("type","hidden");
+                        // lSrNo.setAttribute("value",+lRowno);		//Assign that Sr no value the hidden element to maintain it through out execution
+                        // col.appendChild(lSrNo);
+                        //var lToBeAssign = document.getElementById("process_lSrNo_"+lRowno);
+                        //lToBeAssign.setAttribute("value",+lRowno);
+                    }
+                    
+                    var lToBeAssign = document.getElementById("process_lSrNo_"+lRowno);
+                    lToBeAssign.setAttribute("value",+lRowno);
+                    lToBeAssign.setAttribute("name","lSrNo"+lRowno);
+
+                    //iterate through columns
+                    //columns would be accessed using the "col" variable assigned in the for loop
+                    row.cells[1].firstChild.id	= 'partNo_'+lRowno;
+                    row.cells[2].firstChild.id 	= 'process_chk_'+lRowno;
+                    row.cells[2].childNodes[1].id	= 'process_'+lRowno;
+                }       
+            }
+            
+            //Calculate_Revised_ProcsCost();
+            document.getElementById('Confirmation_Popup_div').style.display="none";
+
+            /* ####### Delete Multiple rows from all table */
+
+            for (var ii = 0, row1; row1 = delMachineryRow.rows[ii]; ii++) 
+            {
+                var trIdNo = ii;
+                var trId = $(delMachineryRow.rows[ii]).attr("id","mcRowId-"+trIdNo);
+            }
+            
+        }	
+
+        function deleteRowsAllTable(tolRowDelCount){
+            /***** Machinery Table Delete Row ***********/
+            var delMachineryRow = document.getElementById("mcTable");
+            for(var i = 0; i<tolRowDelCount; i++)
+            {
+                //delToolingRow.deleteRow(i);
+                console.log(delMachineryRow);
+            }
+            // var mcRowNo;
+            // var mcRowNoArr = [];
+            // for (var i = 2, row; row = delMachineryRow.rows[i]; i++) 
+            // {
+            //     for (var j = 2, col; col = row.cells[j]; j++)
+            //     {
+            //         var lRowno = i;
+            //         row.cells[0].lastChild.id = "mcRowId-"+lRowno;
+            //         mcRowNo = document.getElementById("mcRowId-"+lRowno).id;
+            //         console.log("lRowno =>>", lRowno);
+            //         console.log("Get Row Id =>>", mcRowNo); 
+            //         mcRowNoArr.push(mcRowNo);
+            //         mcRowNoArr = mcRowNoArr.unique();
+            //         var rowIDMcAssign = document.getElementById("mcRowId-"+lRowno); //console.log(rowIDMcAssign);
+            //         rowIDMcAssign.setAttribute("id","mcRowId-",+lRowno);
+            //     }
+            // }
+
+            // $('#mcRowId-'+tolRowDelCount+'').remove();
+            
+
+            /***** Tooling Table Delete Row ***********/
+            /*var delToolingRow = document.getElementById("toolingCost-Table");
+            for(var i = 0; i<tolRowDelCount; i++)
+            {
+                delToolingRow.deleteRow(i);
+            }*/ 
+
+            /***** Labour Table Delete Row ***********/
+            var delLabourRow = document.getElementById("labourCost-Table");
+            // for(var i = 0; i<tolRowDelCount; i++)
+            // {
+            //     delLabourRow.deleteRow(i);
+            // }
+
+            /***** Batch Setup Table Delete Row ***********/
+            var delBatchRow = document.getElementById("batchSetupCost-Table");
+            // for(var i = 0; i<tolRowDelCount; i++)
+            // {
+            //     delBatchRow.deleteRow(i);
+            // } 
+
+            /***** Total Value Add Table Delete Row ***********/
+            var delTotalValueRow = document.getElementById("totalValueAdd-Table");
+            // for(var i = 0; i<tolRowDelCount; i++)
+            // {
+            //     delTotalValueRow.deleteRow(i);
+            // } 
+        }
+
+        //Function to delete selected Process rows from the database
+        function deleteData()
+        {
+            var string_db = "DeleteProcess" + "htmltable"  + lSrNoToBeDeleted + "htmltable";
+            //delete the row from the database also
+            loader_show();
+            var gFilename = "ajax/ajax_Forging";
+            var result=ajax_call(gFilename,string_db);
+            loader_hide();
+        }
+
+        /*** FUNCTION FOR ALERT GIVING ERROR MESSAGE ***/
+        function error_div()
+        {		
+            document.getElementById("Error_Popup_div").innerHTML="";
+            
+            //to set all the other element inactive
+            //document.getElementById("forging-inhouse-div").style.opacity = "0.5";
+            //document.getElementById("forging-inhouse-div").style.pointerEvents = "none";
+            
+            var lDiv=document.getElementById("Error_Popup_div");
+            
+            var lDivH =document.createElement('div');
+            lDivH.setAttribute("style","position:absolute;margin-top:-20px;width:403px;height:17px; border-top-right-radius:15px;border-top-left-radius:15px;border-bottom-left-radius:15px;border-bottom-right-radius:15px;background: none repeat scroll 0 0 transparent;border: 2px outset transparent;box-shadow: 0px -3px rgba(255, 255, 255, 0.3), 0 -7px 25px rgba(0, 0, 0, 0.5) inset;background-color:#800000;");
+            var h3 =document.createElement('h3');
+            h3.setAttribute("style","position:absolute;margin-left:126px;margin-top:-1px;color: #FFFFFF;font-family:Arial;font-size: 14px;font-weight: bold;");
+            h3.innerHTML="Alert Message";
+            lDivH.appendChild(h3);
+            document.body.appendChild(lDiv);
+            
+            var lLabel=document.createElement('label');	
+            lLabel.setAttribute("style","position:absolute; top:22px; color:black; font-family:Arial; font-weight: bold; font-size:15px; margin-left:50px;");
+            lLabel.setAttribute("id","error_value");
+                        
+            var lButton2=document.createElement("button");
+            var lButton2_text=document.createTextNode("OK");
+            lButton2.setAttribute("type","button");
+            lButton2.setAttribute("style","position:absolute;left:158px;margin-top:57px;width:40px;padding:5px;");
+            lButton2.appendChild(lButton2_text);
+            
+            lButton2.onclick = function()
+            {
+                document.getElementById('Error_Popup_div').style.display="none";
+                //to set all the other element active again
+                //document.getElementById("forging-inhouse-div").style.opacity = "1.0";
+                //document.getElementById("forging-inhouse-div").style.pointerEvents = "visible";
+            };
+            
+            lDiv.appendChild(lDivH);
+            lDiv.appendChild(lLabel);
+            lDiv.appendChild(lButton2);
+            document.getElementById('Error_Popup_div').style.display="block";	
+        }
+
+        //Function to remove duplicate values from array
+        Array.prototype.unique = function () 
+        {
+            var r = new Array();
+            o:for(var i = 0, n = this.length; i < n; i++)
+            {
+                for(var x = 0, y = r.length; x < y; x++)
+                {
+                    if(r[x]==this[i])
+                    {
+                        continue o;
+                    }
+                }
+                r[r.length] = this[i];
+            }
+            return r;
+        }	
+        
+    </script>
+
+</body>
+</html>
